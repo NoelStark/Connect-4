@@ -4,15 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class MyPanel extends JPanel implements MouseListener {
-    public static MyFrame yboard;
     public static int player = 2;
     MyPanel()
     {
         setPreferredSize(new Dimension(421,362));
         addMouseListener(this);
-
         for(int i = 0; i < MyFrame.theBoard.length;i++)
         {
             for(int j = 0; j < MyFrame.theBoard[0].length;j++)
@@ -21,6 +20,7 @@ public class MyPanel extends JPanel implements MouseListener {
             }
         }
     }
+
 @Override
    public void paintComponent(Graphics g)
    {
@@ -46,32 +46,44 @@ public class MyPanel extends JPanel implements MouseListener {
            x = 0;
        }
    }
+
     public static int dropP(int column){
 
-       /* int row = MyFrame.theBoard.length-1;
-
-        while(row>=3){
-
-            if(MyFrame.theBoard[row][column].equals(Color.white)){
-
-                return row;
-            }
-            row--;
-
-        }
-
-        */
-        for(int i = 1; i <= 5; i++)
+        for(int i = 5; i >= 0; i--)
         {
-            if(!MyFrame.theBoard[i][column].equals(Color.white))
-            {
-                return i-1;
-            }
+
+            if(MyFrame.theBoard[i][column].equals(Color.white))
+                return i;
         }
+
 
         return 5;
 
     }
+    public static int dropN(int column){
+
+        for(int i = 0; i < 6; i++)
+        {
+            if(OwnAI.arr[i][column] == 1 || OwnAI.arr[i][column] == -1)
+            {
+
+                if(i != 0)
+                {
+                    return i-1;
+                }
+                else{
+                    return i;
+                }
+            }
+
+        }
+
+
+        return 5;
+
+    }
+
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -91,25 +103,31 @@ public class MyPanel extends JPanel implements MouseListener {
         int clickRow;
         int clickCol = x/60;
         clickRow = dropP(clickCol);
+            if(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).noneMatch(value -> value == Color.yellow|| value == Color.red)) {
+                MyFrame.theBoard[5][3] = Color.yellow;
+            }
 
+            /*if(MyFrame.theBoard[clickRow][clickCol] == Color.white)
+            {
 
 
                 MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
-                OwnAI.board();
+
+                //SimpleAI.simpleAI();
+                OwnAI.board(2);
                 revalidate();
                 repaint();
-                //mediumAI.bestMove();
-                //mediumAI.Board();
-                //MyFrame.theBoardCopy[clickRow][clickCol] = 1;
+            }
 
+             */
+            while(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).anyMatch(value -> value == Color.white))
+            {
+                OwnAI.board(2);
+                OwnAI.board(1);
+            }
 
-
-                //MyFrame.theBoard[clickRow][clickCol] = Color.red;
-
-                //
-                //mediumAI.AI();
-                //SimpleAI.simpleAI();
-
+            revalidate();
+            repaint();
 
             CheckWinner.checkWinner(Color.red);
             CheckWinner.checkWinner(Color.yellow);

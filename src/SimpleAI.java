@@ -8,7 +8,6 @@ public class SimpleAI {
 
         int x = rnd.nextInt(0,6);
         int clickRow;
-        int clickCol = x;
         clickRow = MyPanel.dropP(x);
 
         MyFrame.theBoard[clickRow][x] = Color.red;

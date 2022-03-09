@@ -1,25 +1,9 @@
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public class CheckWinner{
-
-    public static boolean myFunction(Color r1)
-    {
-        for(int row = 0; row < MyFrame.theBoard.length; row++)
-        {
-            for(int col = 0; col < MyFrame.theBoard[0].length; col++)
-            {
-
-            }
-        }
-        return false;
-    }
-
-
-
-
-
-
-
 
 
 
@@ -32,6 +16,10 @@ public class CheckWinner{
 
                 if(MyFrame.theBoard[i][j].equals(r) && MyFrame.theBoard[i+1][j+1].equals(r) && MyFrame.theBoard[i+2][j+2].equals(r) && MyFrame.theBoard[i+3][j+3].equals(r))
                 {
+                    MyFrame.theBoard[i][j] = Color.green;
+                    MyFrame.theBoard[i+1][j+1] = Color.green;
+                    MyFrame.theBoard[i+2][j+2] = Color.green;
+                    MyFrame.theBoard[i+3][j+3] = Color.green;
                     return true;
                 }
             }
@@ -47,6 +35,10 @@ public class CheckWinner{
 
                 if(MyFrame.theBoard[i][j].equals(r) && MyFrame.theBoard[i+1][j-1].equals(r) && MyFrame.theBoard[i+2][j-2].equals(r) && MyFrame.theBoard[i+3][j-3].equals(r))
                 {
+                    MyFrame.theBoard[i][j] = Color.green;
+                    MyFrame.theBoard[i+1][j-1] = Color.green;
+                    MyFrame.theBoard[i+2][j-2] = Color.green;
+                    MyFrame.theBoard[i+3][j-3] = Color.green;
                     return true;
 
                 }
@@ -62,6 +54,10 @@ public class CheckWinner{
             {
                 if(MyFrame.theBoard[i][j].equals(r) && MyFrame.theBoard[i+1][j].equals(r) && MyFrame.theBoard[i+2][j].equals(r) && MyFrame.theBoard[i+3][j].equals(r))
                 {
+                    MyFrame.theBoard[i][j] = Color.green;
+                    MyFrame.theBoard[i+1][j] = Color.green;
+                    MyFrame.theBoard[i+2][j] = Color.green;
+                    MyFrame.theBoard[i+3][j] = Color.green;
                     return true;
                 }
             }
@@ -76,6 +72,10 @@ public class CheckWinner{
             {
                 if(MyFrame.theBoard[i][j].equals(r) && MyFrame.theBoard[i][j+1].equals(r) && MyFrame.theBoard[i][j+2].equals(r) && MyFrame.theBoard[i][j+3].equals(r))
                 {
+                    MyFrame.theBoard[i][j] = Color.green;
+                    MyFrame.theBoard[i][j+1] = Color.green;
+                    MyFrame.theBoard[i][j+2] = Color.green;
+                    MyFrame.theBoard[i][j+3] = Color.green;
                     return true;
 
                 }
@@ -89,7 +89,7 @@ public static boolean winner = false;
 
         if(horizontal(c) || vertical(c) || diagonalP(c) || diagonalN(c))
         {
-            if(MyPanel.player%2 == 0)
+            if(MyPanel.player%2 == 0 && c == Color.yellow)
             {
                 System.out.println("Yellow won!");
             }
@@ -98,9 +98,26 @@ public static boolean winner = false;
                 System.out.println("Red won!");
             }
 
-              winner = true;
+
+            winner = true;
 
         }
+        /*
+
+        List<Color> check = (List<Color>) Arrays.asList(MyFrame.theBoard);
+        if(check.contains(Color.white))
+        {
+            System.out.println("Draw");
+            System.out.println();
+        }
+
+*/
+        if(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).noneMatch(value -> value == Color.white)) {
+            System.out.println("Draw!");
+            return true;
+        }
+
+
 
         return false;
     }
