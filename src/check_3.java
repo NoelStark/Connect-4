@@ -6,7 +6,7 @@ public class check_3 {
 
                 try
                 {
-                    if(OwnAI.arr[i-1][j-1] == k && OwnAI.arr[i-2][i-2] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i-1][j-1] == k && OwnAI.arr[i-2][i-2] == k && OwnAI.arr[i][j] == 0)
                     {
                         return true;
                     }
@@ -18,7 +18,7 @@ public class check_3 {
 
                 try
                 {
-                    if(OwnAI.arr[i+1][j-1] == k && OwnAI.arr[i+2][j-2] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i+1][j-1] == k && OwnAI.arr[i+2][j-2] == k && OwnAI.arr[i][j] == 0)
                     {
                         return true;
                     }
@@ -31,7 +31,7 @@ public class check_3 {
                 try
                 {
 
-                    if(OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j-2] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j-2] == k && OwnAI.arr[i][j] == 0)
                     {
 
                         return true;
@@ -44,7 +44,7 @@ public class check_3 {
 
                 try
                 {
-                    if(OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j+2] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j+2] == k && OwnAI.arr[i][j] == 0)
                     {
                         return true;
 
@@ -56,7 +56,7 @@ public class check_3 {
                 }
                 try
                 {
-                    if(OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j] == 0)
                     {
                         return true;
                     }
@@ -68,7 +68,7 @@ public class check_3 {
 
                 try
                 {
-                    if(OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i][j+1] == k && OwnAI.arr[i][j-1] == k && OwnAI.arr[i][j] == 0)
                     {
                     return true;
                     }
@@ -80,7 +80,7 @@ public class check_3 {
 
                 try
                 {
-                    if(OwnAI.arr[i-1][j] == k && OwnAI.arr[i-2][j] == k && OwnAI.arr[i][j] != l)
+                    if(OwnAI.arr[i-1][j] == k && OwnAI.arr[i-2][j] == k && OwnAI.arr[i][j] == 0)
                     {
                     return true;
                     }
@@ -92,7 +92,7 @@ public class check_3 {
 
         try
         {
-            if(OwnAI.arr[i+1][j] == k && OwnAI.arr[i+2][j] == k && OwnAI.arr[i][j] != l)
+            if(OwnAI.arr[i+1][j] == k && OwnAI.arr[i+2][j] == k && OwnAI.arr[i][j] == 0)
             {
                 return true;
             }
@@ -103,7 +103,7 @@ public class check_3 {
         }
                 try
                 {
-                     if(OwnAI.arr[i+1][j+1] == k && OwnAI.arr[i+2][j+2] == k && OwnAI.arr[i][j] != l)
+                     if(OwnAI.arr[i+1][j+1] == k && OwnAI.arr[i+2][j+2] == k && OwnAI.arr[i][j] == 0)
                      {
                         return true;
                      }

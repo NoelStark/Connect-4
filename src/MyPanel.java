@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class MyPanel extends JPanel implements MouseListener {
-    public static int player = 2;
+    public static int player = 1;
+    public static int l = 0;
+    public static boolean alreadyExecuted;
+    public static boolean multiplayer = false, easy = false, medium = false, hard = false;
     MyPanel()
     {
-        setPreferredSize(new Dimension(421,362));
         addMouseListener(this);
         for(int i = 0; i < MyFrame.theBoard.length;i++)
         {
@@ -57,7 +59,7 @@ public class MyPanel extends JPanel implements MouseListener {
         }
 
 
-        return 5;
+        return 0;
 
     }
     public static int dropN(int column){
@@ -92,6 +94,7 @@ public class MyPanel extends JPanel implements MouseListener {
 
 
     public void mousePressed(MouseEvent e) {
+
         if(CheckWinner.winner)
         {
             removeMouseListener(this);
@@ -103,34 +106,53 @@ public class MyPanel extends JPanel implements MouseListener {
         int clickRow;
         int clickCol = x/60;
         clickRow = dropP(clickCol);
-            if(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).noneMatch(value -> value == Color.yellow|| value == Color.red)) {
-                MyFrame.theBoard[5][3] = Color.yellow;
-            }
 
-            /*if(MyFrame.theBoard[clickRow][clickCol] == Color.white)
-            {
-
-
-                MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
-
-                //SimpleAI.simpleAI();
-                OwnAI.board(2);
-                revalidate();
-                repaint();
-            }
-
-             */
-            while(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).anyMatch(value -> value == Color.white))
-            {
-                OwnAI.board(2);
-                OwnAI.board(1);
-            }
-
-            revalidate();
-            repaint();
 
             CheckWinner.checkWinner(Color.red);
             CheckWinner.checkWinner(Color.yellow);
+            if(MyFrame.theBoard[clickRow][clickCol] == Color.white)
+            {
+                alreadyExecuted = false;
+                MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
+                if(multiplayer)
+                {
+
+                    if(player == 2)
+                    {
+                        MyFrame.theBoard[clickRow][clickCol] = Color.red;
+                        player = 1;
+                    }
+                    else
+                    {
+                        MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
+                        player = 2;
+                    }
+
+
+                }
+                else if(easy)
+                {
+
+                    SimpleAI.simpleAI();
+
+                }
+                else if(medium)
+                {
+
+                    OwnAI.board(Color.yellow);
+                }
+                else if(hard)
+                {
+                    HardAI.board(1);
+                }
+
+            }
+
+            CheckWinner.checkWinner(Color.red);
+            CheckWinner.checkWinner(Color.yellow);
+            revalidate();
+            repaint();
+
 
 
 

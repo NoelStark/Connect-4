@@ -102,18 +102,10 @@ public static boolean winner = false;
             winner = true;
 
         }
-        /*
 
-        List<Color> check = (List<Color>) Arrays.asList(MyFrame.theBoard);
-        if(check.contains(Color.white))
-        {
-            System.out.println("Draw");
-            System.out.println();
-        }
-
-*/
         if(Arrays.stream(MyFrame.theBoard).flatMap(Arrays::stream).noneMatch(value -> value == Color.white)) {
             System.out.println("Draw!");
+            winner = true;
             return true;
         }
 
