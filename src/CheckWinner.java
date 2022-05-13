@@ -89,7 +89,7 @@ public static boolean winner = false;
 
         if(horizontal(c) || vertical(c) || diagonalP(c) || diagonalN(c))
         {
-            if(MyPanel.player%2 == 0 && c == Color.yellow)
+            if(c == Color.yellow)
             {
                 System.out.println("Yellow won!");
             }

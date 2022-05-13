@@ -1,26 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class MyPanel extends JPanel implements MouseListener {
     public static int player = 1;
-    public static int l = 0;
     public static boolean alreadyExecuted;
     public static boolean multiplayer = false, easy = false, medium = false, hard = false;
     MyPanel()
     {
+
         addMouseListener(this);
-        for(int i = 0; i < MyFrame.theBoard.length;i++)
+        for(int i = 0; i < MyFrame.theBoard.length;i++) //Gör brädet vitt
         {
             for(int j = 0; j < MyFrame.theBoard[0].length;j++)
             {
                 MyFrame.theBoard[i][j] = Color.white;
             }
         }
+        JButton btn1 = new JButton("Reset");
+        this.setLayout(null);
+        btn1.setBounds(430,200,80,40);
+        btn1.addActionListener(e->{
+            MyFrame.frame.setVisible(false);
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            CheckWinner.winner = false;
+            multiplayer = easy = medium = hard = false;
+            new MyFrame();
+        });
+        this.add(btn1);
+
     }
 
 @Override
@@ -32,16 +46,16 @@ public class MyPanel extends JPanel implements MouseListener {
 
        int x = 0;
        int y = 0;
-       for(int i = 0; i < MyFrame.theBoard.length; i++)
+       for(int i = 0; i < MyFrame.theBoard.length; i++) //ritar brädet
        {
            for(int j = 0; j < MyFrame.theBoard[0].length;j++)
            {
 
 
                g2.setColor(MyFrame.theBoard[i][j]);
-               g2.fillOval(x,y,60,60);
-               g2.setColor(Color.black);
-               g2.drawOval(x,y,60,60);
+               g2.fillOval(x,y,60,60); //Skapar cirklar
+               g2.setColor(Color.black); //Gör området omkring cirklarna svart
+               g2.drawOval(x,y,60,60); //ritar ut dem
                x = x + 60;
            }
            y = y + 60;
@@ -49,6 +63,7 @@ public class MyPanel extends JPanel implements MouseListener {
        }
    }
 
+   //Metoden som släpper brickorna längst ner i en kolumn
     public static int dropP(int column){
 
         for(int i = 5; i >= 0; i--)
@@ -62,6 +77,7 @@ public class MyPanel extends JPanel implements MouseListener {
         return 0;
 
     }
+    //Metoden som släpper siffororna i arr[][] för att spegla brädet
     public static int dropN(int column){
 
         for(int i = 0; i < 6; i++)
@@ -95,14 +111,14 @@ public class MyPanel extends JPanel implements MouseListener {
 
     public void mousePressed(MouseEvent e) {
 
-        if(CheckWinner.winner)
+        if(CheckWinner.winner) //Om det finns en vinnare eller spelet är oavgjort
         {
             removeMouseListener(this);
         }
         else{
 
 
-        int x = e.getX();
+        int x = e.getX();//Får X-koordinaten baserat på vart spelare har tryckt
         int clickRow;
         int clickCol = x/60;
         clickRow = dropP(clickCol);
@@ -114,36 +130,36 @@ public class MyPanel extends JPanel implements MouseListener {
             {
                 alreadyExecuted = false;
                 MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
-                if(multiplayer)
+                if(multiplayer) //Om användare valt tvåspelar läget
                 {
 
-                    if(player == 2)
+                    if(player == 2)//Om gult nyss spelat
                     {
-                        MyFrame.theBoard[clickRow][clickCol] = Color.red;
+                        MyFrame.theBoard[clickRow][clickCol] = Color.red; //Röds tur
                         player = 1;
                     }
                     else
                     {
-                        MyFrame.theBoard[clickRow][clickCol] = Color.yellow;
+                        MyFrame.theBoard[clickRow][clickCol] = Color.yellow; //guls tur
                         player = 2;
                     }
 
 
                 }
-                else if(easy)
+                else if(easy) //Om användare valt Easy AI
                 {
 
                     SimpleAI.simpleAI();
 
                 }
-                else if(medium)
+                else if(medium) //Om användare valt Medium AI
                 {
 
                     OwnAI.board(Color.yellow);
                 }
-                else if(hard)
+                else if(hard)//Om användare valt Hard AI
                 {
-                    HardAI.board(1);
+                    HardAI.board();
                 }
 
             }

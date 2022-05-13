@@ -1,18 +1,17 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 
 public class MyFrame extends JFrame{
     public static MyPanel panel2;
     public static Color[][] theBoard = new Color[6][7];
 
-
+    public static JFrame frame;
 
     public MyFrame(){
+        frame = new JFrame("Demo");
         panel2 = new MyPanel();
-        JFrame frame = new JFrame("Demo");
             JPanel panel = new JPanel(new BorderLayout());
             JPanel layout = new JPanel(new GridBagLayout());
             layout.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,10 +64,9 @@ public class MyFrame extends JFrame{
             btnPanel.add(btn4);
             layout.add(btnPanel);
             panel.add(layout, BorderLayout.CENTER);
-
             frame.add(panel);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(435, 400);
+            frame.setSize(530, 400);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
 

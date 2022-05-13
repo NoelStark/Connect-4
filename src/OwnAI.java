@@ -3,39 +3,9 @@ import java.util.*;
 import java.util.List;
 
 public class OwnAI {
-    public static int[][] arr = new int[6][7];
+    public static int[][] arr = new int[6][7]; //Den array som kommer att spegla brädet och beräkna framtida drag
 
-    private static int bestMove()
-    {
-        int value = 0;
-        int count = 0;
-        outerloop:
-        for(int i = 0; i < 6; i++)
-        {
-            for(int j = 0; j <7 ;j++)
-            {
-                if(Arrays.stream(arr).flatMapToInt(Arrays::stream).anyMatch(num -> num == -4))
-                {
-                    return -4;
-                }
-                else if(Arrays.stream(arr).flatMapToInt(Arrays::stream).anyMatch(num -> num == 4))
-                {
-                    return 4;
-                }
-                else if(arr[i][j] == 3)
-                {
-                    value += 3;
-                    count++;
-                }
-                else if(arr[i][j] == -3)
-                {
-                    value -= 3;
-                    count++;
-                }
-            }
-        }
-        return value/count;
-    }
+    //Metoden nedan ittererar genom arr[][] och sätter ut markör beroende på värden i array
     private static boolean loopBoard(int k, Color c){
 
         for(int i = 0; i < 6;i++ )
@@ -44,7 +14,7 @@ public class OwnAI {
             {
                 if(arr[i][j] == k )
                 {
-                        MyFrame.theBoard[i][j] = c; //First time is the fake, second the real
+                        MyFrame.theBoard[i][j] = c; //Sätter den specifika platsen till önskad färg
                         return true;
                 }
             }
@@ -53,36 +23,37 @@ public class OwnAI {
 
     }
 
+    //Kontrollerar om det finns 2,3 eller 4 i rad av någon färg
     private static int checkfinal(int i, int j)
     {
 
 
         if(check_4.checking(i,j,-1,1))
         {
-            return -4;
+            return -4; //Röd 4 i rad
         }
         else if(check_4.checking(i,j,1,-1))
         {
-            return 4;
+            return 4; //Gul 4 i rad
         }
         else if(check_3.checking(i,j, -1,1))
         {
-            return -3;
+            return -3; //Röd 3 i rad
         }
         else if(check_3.checking(i,j, 1,-1))
         {
-            return 3;
+            return 3; //Gul 3 i rad
         }
-        else if(check_2.checking(i,j) || check_2.checking(i-1,j) || check_2.checking(i+1,j)
+        else if(check_2.checking(i+1,j)
                 || check_2.checking(i,j+1) ||  check_2.checking(i,j-1) ||
                 check_2.checking(i-1,j-1) || check_2.checking(i-1,j+1))
         {
-            return 2;
+            return 2; //Gul 2 i rad
         }
 
         else if(OwnAI.arr[i][j] == -1)
         {
-            return -1;
+            return -1; //Röd markör
         }
         else{
             return 0;
@@ -101,15 +72,15 @@ public class OwnAI {
 
                 if(MyFrame.theBoard[i][j] == Color.yellow)
                 {
-                    arr[i][j] = 1;
+                    arr[i][j] = 1;//Om det finns en gul markör placerad
                 }
                 else if(MyFrame.theBoard[i][j] == Color.red)
                 {
-                    arr[i][j] = -1;
+                    arr[i][j] = -1;//Om det finns en röd markör placerad
                 }
                 else if(MyFrame.theBoard[i][j] == Color.white)
                 {
-                    arr[i][j] = 0;
+                    arr[i][j] = 0;//Om platsen är vit
                 }
             }
         }
@@ -144,21 +115,12 @@ public class OwnAI {
         if(c == Color.yellow) c = Color.red;
         else c = Color.yellow;
 
-    for(int i = 4; i > 1; i--) { //This is doing the actual play
+    for(int i = 4; i > 1; i--) { //This is doing the play
 
         if(loopBoard(i, c)) break;
         else if(loopBoard(i*-1,c) ) break;
     }
 
-/*
-        if(!MyPanel.alreadyExecuted)
-        {
-            MyPanel.alreadyExecuted = true;
-            board(c);
-
-        }
-
- */
 
     }
 }

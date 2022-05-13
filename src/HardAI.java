@@ -1,8 +1,9 @@
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class HardAI {
+    public static double bestScore = 0;
+
     public static double loopCopiedboard(){ //Gets a value based on current board state
         double value = 0;
         int count = 0;
@@ -10,9 +11,9 @@ public class HardAI {
         {
             for(int j = 0; j < 7; j++)
             {
-                if(arr[i][j] != 1 && arr[i][j] != -1 && arr[i][j] != 0)
+                if(OwnAI.arr[i][j] != 1 && OwnAI.arr[i][j] != -1 && OwnAI.arr[i][j] != 0)
                 {
-                    value += arr[i][j];
+                    value += OwnAI.arr[i][j];
                     count++;
                 }
             }
@@ -68,13 +69,7 @@ public class HardAI {
         {
             return 2;
         }
-/*
-        else if(check_2.checking(i,j))
-        {
-            return 2;
-        }
 
- */
         else if(OwnAI.arr[i][j] == -1)
         {
             return -1;
@@ -84,10 +79,6 @@ public class HardAI {
         }
 
     }
-    public static int[][] arr = new int[6][7];
-    public static double bestScore = 0;
-
-
 
     public static void paintBoard()
     {
@@ -98,28 +89,29 @@ public class HardAI {
 
                 if(MyFrame.theBoard[i][j] == Color.yellow)
                 {
-                    arr[i][j] = 1;
+                    OwnAI.arr[i][j] = 1;
                 }
                 else if(MyFrame.theBoard[i][j] == Color.red)
                 {
-                    arr[i][j] = -1;
+                    OwnAI.arr[i][j] = -1;
                 }
                 else if(MyFrame.theBoard[i][j] == Color.white)
                 {
-                    arr[i][j] = 0;
+                    OwnAI.arr[i][j] = 0;
                 }
             }
         }
     }
 
-    public static void board(int player)
+    public static void board()
     {
         Color c = Color.red;
         bestScore = 0;
+        paintBoard();
         loop:
-        for(int p = 0; p <= 2; p++)
+        for(int p = 0; p < 2; p++)
         {
-            paintBoard();
+
 
             for(int j = 0; j < 7; j++)
             {
@@ -127,11 +119,11 @@ public class HardAI {
                 if(MyFrame.theBoard[MyPanel.dropP(j)][j] == Color.white)
                 {
                     MyFrame.theBoard[MyPanel.dropP(j)][j] = Color.yellow;
-                    arr[MyPanel.dropN(j)][j] = checkfinal(MyPanel.dropN(j),j);
+                    OwnAI.arr[MyPanel.dropN(j)][j] = checkfinal(MyPanel.dropN(j),j);
                 }
 
 
-                if(arr[MyPanel.dropP(j)][j] != 1 && arr[MyPanel.dropP(j)][j] != -1)
+                if(OwnAI.arr[MyPanel.dropP(j)][j] != 1 && OwnAI.arr[MyPanel.dropP(j)][j] != -1)
                 {
                     if(MyPanel.dropN(j) == 0)
                     {
@@ -142,11 +134,7 @@ public class HardAI {
                         MyFrame.theBoard[MyPanel.dropP(j)+1][j] = Color.white;
                     }
                 }
-
-
             }
-
-
 
 
             if(!MyPanel.alreadyExecuted)
@@ -155,7 +143,7 @@ public class HardAI {
                 {
                     for(int j = 0; j < 7;j++)
                     {
-                        Main.copiedArray[i][j] = arr[i][j];
+                        Main.copiedArray[i][j] = OwnAI.arr[i][j];
                         Main.copiedBoard[i][j] = MyFrame.theBoard[i][j];
                     }
                 }
@@ -179,7 +167,7 @@ public class HardAI {
 
 
             double score = loopCopiedboard();
-            if(Arrays.stream(arr).flatMapToInt(Arrays::stream).noneMatch(value -> value == 4 || value == -4))
+            if(Arrays.stream(OwnAI.arr).flatMapToInt(Arrays::stream).noneMatch(value -> value == 4 || value == -4))
             {
 
 
@@ -189,7 +177,7 @@ public class HardAI {
                     {
                         for(int j = 0; j < 7; j++)
                         {
-                            Main.tempCopy[i][j] = arr[i][j];
+                            Main.tempCopy[i][j] = OwnAI.arr[i][j];
                         }
                     }
                     outerloop:
@@ -207,11 +195,11 @@ public class HardAI {
                     bestScore = score;
                 }
             }
-            else if(Arrays.stream(arr).flatMapToInt(Arrays::stream).anyMatch(value -> value == 4))
+            else if(Arrays.stream(OwnAI.arr).flatMapToInt(Arrays::stream).anyMatch(value -> value == 4))
             {
                 break loop;
             }
-            else if(Arrays.stream(arr).flatMapToInt(Arrays::stream).anyMatch(value -> value == -4))
+            else if(Arrays.stream(OwnAI.arr).flatMapToInt(Arrays::stream).anyMatch(value -> value == -4))
             {
                 break loop;
             }
